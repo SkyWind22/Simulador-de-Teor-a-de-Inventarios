@@ -25,7 +25,7 @@ export default function App() {
 
   const handleSimular = async () => {
     try {
-      const res = await axios.post('http://localhost:8000/api/calcular', formData);
+      const res = await axios.post('/api/calcular', formData);
       setResult(res.data);
     } catch (err) {
       alert("Error de conexión con la API en Python.");
@@ -256,7 +256,7 @@ export default function App() {
               cursor: 'pointer', 
               marginTop: '10px',
               boxShadow: '0 4px 12px rgba(229, 33, 54, 0.3)'
-            }}>
+            }}  >
             EJECUTAR SIMULACIÓN
           </button>
         </div>
