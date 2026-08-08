@@ -1,11 +1,46 @@
 import math
+import numpy as np
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from scipy.stats import norm  # pyrefly: ignore
-#.\venv\Scripts\activate
-#uvicorn api.main:app --reload --port 8000
-#npm run dev
+
+# Polyfill for math.erfinv if not present in standard math module
+if not hasattr(math, "erfinv"):
+    def _erfinv(x: float) -> float:
+        if x >= 1.0:
+            return float("inf")
+        if x <= -1.0:
+            return float("-inf")
+        if x == 0:
+            return 0.0
+        a = 0.147
+        sgn = 1.0 if x >= 0 else -1.0
+        log_term = math.log(1.0 - x * x)
+        term1 = 2.0 / (math.pi * a) + log_term / 2.0
+        inner = term1 ** 2 - log_term / a
+        w = sgn * math.sqrt(math.sqrt(inner) - term1)
+        two_over_sqrt_pi = 2.0 / math.sqrt(math.pi)
+        for _ in range(3):
+            err = math.erf(w) - x
+            deriv = two_over_sqrt_pi * math.exp(-w * w)
+            w -= err / deriv
+        return w
+
+    math.erfinv = _erfinv
+
+
+def calcular_z(nivel_servicio_pct: float) -> float:
+    p = nivel_servicio_pct / 100.0
+    return math.sqrt(2) * math.erfinv(2 * p - 1)
+
+
+def densidad_normal(x, mu, sigma):
+    return (1.0 / (sigma * math.sqrt(2 * math.pi))) * np.exp(-0.5 * ((x - mu) / sigma) ** 2)
+
+
+# .\venv\Scripts\activate
+# uvicorn api.main:app --reload --port 8000
+# npm run dev
 app = FastAPI(
     title="Simulador de Inventario Probabilístico - UNET", version="1.0"
 )
@@ -41,14 +76,13 @@ def calcular_modelo_q_r(data: InventoryInput):
     sigma_L = data.desviacion_diaria * math.sqrt(data.lead_time_dias)
 
     # 3. Factor Z y Stock de Seguridad
-    alpha = data.nivel_servicio_pct / 100.0
-    Z = float(norm.ppf(alpha))
+    Z = calcular_z(data.nivel_servicio_pct)
     B = Z * sigma_L
     R = mu_L + B
 
     # 4. Puntos para la curva normal
     x_vals = [mu_L + (i * 0.1 * sigma_L) for i in range(-40, 41)]
-    y_vals = [float(norm.pdf(x, mu_L, sigma_L)) for x in x_vals]
+    y_vals = [float(densidad_normal(x, mu_L, sigma_L)) for x in x_vals]
 
     return {
         "Q_opt": round(Q_opt, 2),
