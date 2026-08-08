@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from scipy.stats import norm  # pyrefly: ignore
 #.\venv\Scripts\activate
-#uvicorn main:app --reload --port 8000
+#uvicorn api.main:app --reload --port 8000
 #npm run dev
 app = FastAPI(
     title="Simulador de Inventario Probabilístico - UNET", version="1.0"
