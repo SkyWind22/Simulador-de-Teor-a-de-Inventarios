@@ -32,12 +32,12 @@ export default function App() {
     }
   };
 
-  const chartData = result?.curva_normal.x.map((x, i) => ({
+  const chartData = result?.curva_normal?.x?.map((x, i) => ({
     x,
     y: result.curva_normal.y[i]
   })) || [];
 
-  // Paleta UI calibrada profesionalmente para Dark y Light Mode
+  // Temas visuales para Dark y Light mode
   const theme = {
     bgApp: isDarkMode ? '#111111' : '#f8fafc',
     bgHeader: isDarkMode ? '#111111' : '#ffffff',
@@ -58,18 +58,16 @@ export default function App() {
     <div style={{ 
       backgroundColor: theme.bgApp, 
       color: theme.textMain, 
-      width: '100vw',
-      maxWidth: '100%',
+      width: '100%',
       minHeight: '100vh',
       margin: 0,
       padding: 0,
       fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       display: 'flex',
       flexDirection: 'column',
-      boxSizing: 'border-box',
-      overflowX: 'hidden'
+      boxSizing: 'border-box'
     }}>
-      {/* Header Estilo Riot Games */}
+      {/* Header / Barra Superior */}
       <header style={{ 
         backgroundColor: theme.bgHeader, 
         borderBottom: `1px solid ${theme.border}`, 
@@ -79,11 +77,11 @@ export default function App() {
         alignItems: 'center',
         width: '100%',
         height: '65px',
-        boxSizing: 'border-box',
+        
         flexShrink: 0,
         boxShadow: theme.cardShadow
       }}>
-        {/* Branding & Título */}
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ 
             backgroundColor: '#e52136', 
@@ -110,7 +108,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Acciones e Info */}
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{ 
             backgroundColor: theme.bgPill, 
@@ -142,8 +140,7 @@ export default function App() {
               fontWeight: '800',
               fontSize: '11px',
               letterSpacing: '1px',
-              textTransform: 'uppercase',
-              transition: 'all 0.2s ease'
+              textTransform: 'uppercase'
             }}
           >
             <HelpCircle size={14} color="#e52136" /> Guía
@@ -160,8 +157,7 @@ export default function App() {
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.2s ease'
+              justifyContent: 'center'
             }}
           >
             {isDarkMode ? <Sun size={15} color="#f59e0b" /> : <Moon size={15} color="#475569" />}
@@ -169,13 +165,13 @@ export default function App() {
         </div>
       </header>
 
-      {/* Workspace */}
+      {/* Grid Principal */}
       <div style={{ 
         width: '100%', 
         flex: 1,
         padding: '16px', 
         display: 'grid', 
-        gridTemplateColumns: '320px 1fr', 
+        gridTemplateColumns: '300px 1fr', 
         gap: '16px',
         boxSizing: 'border-box'
       }}>
@@ -189,9 +185,9 @@ export default function App() {
           display: 'flex',
           flexDirection: 'column',
           justify: 'space-between',
-          boxSizing: 'border-box',
-          overflowY: 'auto',
+
           maxHeight: 'calc(100vh - 97px)',
+          overflowY: 'auto',
           boxShadow: theme.cardShadow
         }}>
           <div>
@@ -260,7 +256,7 @@ export default function App() {
           </button>
         </div>
 
-        {/* Panel Derecho: Dashboard */}
+        {/* Panel Derecho: Dashboard de Resultados */}
         <div style={{ 
           backgroundColor: theme.bgCard, 
           border: `1px solid ${theme.border}`, 
@@ -268,14 +264,14 @@ export default function App() {
           borderRadius: '12px',
           display: 'flex',
           flexDirection: 'column',
-          boxSizing: 'border-box',
+
           maxHeight: 'calc(100vh - 97px)',
           overflow: 'hidden',
           boxShadow: theme.cardShadow
         }}>
           {result ? (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '14px' }}>
-              {/* Banner Instrucción */}
+
               <div style={{ 
                 backgroundColor: theme.bgInner, 
                 borderLeft: '4px solid #e52136', 
@@ -291,7 +287,7 @@ export default function App() {
                 </p>
               </div>
 
-              {/* KPIs */}
+              {/* Tarjetas KPI */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', flexShrink: 0 }}>
                 <div style={{ backgroundColor: theme.bgInner, border: `1px solid ${theme.border}`, padding: '12px', borderRadius: '8px', textAlign: 'center' }}>
                   <Package color="#e52136" size={18} />
@@ -302,7 +298,7 @@ export default function App() {
                 <div style={{ backgroundColor: theme.bgInner, border: `1px solid ${theme.border}`, padding: '12px', borderRadius: '8px', textAlign: 'center' }}>
                   <RefreshCw color="#d97706" size={18} />
                   <h4 style={{ margin: '4px 0 2px 0', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.5px', color: theme.textSub, fontWeight: '700' }}>PUNTO REORDEN (R*)</h4>
-                  <p style={{ fontSize: '20px', fontWeight: '900', color: '#d97706', margin: 0 }}>{result.R_punto_reorden} <span style={{ fontSize: '10px', color: theme.textSub }}>unids</span></p>
+                  <p style={{ fontSize: '20px', fontWeight: '900', color: '#d97706', margin: 0 }}>{result.R_punto_reorden} <span style={{ fontSize: '10px', color:theme.textSub }}>unids</span></p>
                 </div>
 
                 <div style={{ backgroundColor: theme.bgInner, border: `1px solid ${theme.border}`, padding: '12px', borderRadius: '8px', textAlign: 'center' }}>
@@ -312,7 +308,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Gráfica Ajustada */}
+              {/* Gráfica Recharts */}
               <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
                 <h3 style={{ fontSize: '10px', fontWeight: '800', letterSpacing: '1px', textTransform: 'uppercase', color: theme.textSub, margin: '0 0 8px 0', textAlign: 'center' }}>
                   DISTRIBUCIÓN NORMAL DE LA DEMANDA EN LEAD TIME
@@ -322,7 +318,7 @@ export default function App() {
                     <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <XAxis dataKey="x" stroke={theme.chartLine} tick={{ fill: theme.textSub, fontSize: 9, fontWeight: 600 }} />
                       <YAxis stroke={theme.chartLine} tick={{ fill: theme.textSub, fontSize: 9, fontWeight: 600 }} />
-                      <Tooltip contentStyle={{ backgroundColor: theme.bgCard, border: `1px solid ${theme.border}`, color: theme.textMain, fontSize: '11px', borderRadius: '8px', boxShadow: theme.cardShadow }} />
+                      <Tooltip contentStyle={{ backgroundColor: theme.bgCard, border: `1px solid ${theme.border}`, color: theme.textMain, fontSize: '11px', borderRadius: '8px' }} />
                       <Area type="monotone" dataKey="y" stroke="#e52136" fill="#e52136" fillOpacity={0.25} strokeWidth={2} />
                       <ReferenceLine x={result.R_punto_reorden} stroke="#d97706" strokeDasharray="3 3" label={{ value: 'R*', fill: '#d97706', position: 'top', fontSize: 10, fontWeight: 'bold' }} />
                     </AreaChart>
@@ -348,7 +344,7 @@ export default function App() {
           position: 'fixed',
           top: 0,
           left: 0,
-          width: '100vw',
+          width: '100%',
           height: '100vh',
           backgroundColor: 'rgba(0, 0, 0, 0.6)',
           backdropFilter: 'blur(4px)',
@@ -364,8 +360,7 @@ export default function App() {
             borderRadius: '12px',
             maxWidth: '450px',
             width: '90%',
-            color: theme.textMain,
-            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+            color: theme.textMain
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: `1px solid ${theme.border}`, paddingBottom: '10px', marginBottom: '14px' }}>
               <h3 style={{ margin: 0, fontSize: '13px', fontWeight: '800', textTransform: 'uppercase', color: '#e52136' }}>
@@ -375,9 +370,9 @@ export default function App() {
             </div>
             
             <div style={{ fontSize: '11px', lineHeight: '1.6', color: theme.textMain }}>
-              <p style={{ margin: '0 0 8px 0' }}><strong>1. Parámetros:</strong> Modifica la demanda, tiempos y costos según la operación.</p>
-              <p style={{ margin: '0 0 8px 0' }}><strong>2. Ejecución:</strong> Presiona <code>EJECUTAR SIMULACIÓN</code>.</p>
-              <p style={{ margin: 0 }}><strong>3. Resultados:</strong> La gráfica y las tarjetas mostrarán los puntos óptimos de reorden y stock de seguridad.</p>
+              <p style={{ margin: '0 0 8px 0' }}><strong>1. Parámetros:</strong> Ingrese la demanda anual, costos y tiempos de entrega.</p>
+              <p style={{ margin: '0 0 8px 0' }}><strong>2. Ejecución:</strong> Haga clic en <code>EJECUTAR SIMULACIÓN</code>.</p>
+              <p style={{ margin: 0 }}><strong>3. Resultados:</strong> Verifique los valores de lote óptimo ($Q^*$), punto de reorden ($R^*$) y stock de seguridad ($B$).</p>
             </div>
 
             <button 
@@ -428,7 +423,7 @@ function inputStyle(theme) {
     fontSize: '11px',
     fontWeight: '700',
     textAlign: 'center',
-    boxSizing: 'border-box',
+
     outline: 'none'
   };
 }
