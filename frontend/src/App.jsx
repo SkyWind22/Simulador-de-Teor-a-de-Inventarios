@@ -58,20 +58,14 @@ export default function App() {
     <div style={{ 
       backgroundColor: theme.bgApp, 
       color: theme.textMain, 
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      width: '100vw',
-      height: '100vh',
+      width: '100%',
+      minHeight: '100vh',
       margin: 0,
       padding: 0,
       fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       display: 'flex',
       flexDirection: 'column',
-      boxSizing: 'border-box',
-      overflow: 'hidden'
+      boxSizing: 'border-box'
     }}>
       {/* Header Estilo Riot Games */}
       <header style={{ 
@@ -176,7 +170,7 @@ export default function App() {
       {/* Workspace */}
       <div style={{ 
         width: '100%', 
-        height: 'calc(100vh - 65px)', 
+        flex: 1,
         padding: '16px 24px', 
         display: 'grid', 
         gridTemplateColumns: '340px 1fr', 
@@ -184,7 +178,7 @@ export default function App() {
         boxSizing: 'border-box'
       }}>
         
-        {/* Panel Izquierdo: Inputs */}
+        {/* Panel Izquierdo: Inputs (Ajustado con Scroll Interno) */}
         <div style={{ 
           backgroundColor: theme.bgCard, 
           border: `1px solid ${theme.border}`, 
@@ -194,15 +188,16 @@ export default function App() {
           flexDirection: 'column',
           justifyContent: 'space-between',
           boxSizing: 'border-box',
-          height: '100%',
+          overflowY: 'auto',
+          maxHeight: 'calc(100vh - 95px)',
           boxShadow: theme.cardShadow
         }}>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+          <div>
             <h2 style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '1.5px', textTransform: 'uppercase', borderBottom: `1px solid ${theme.border}`, paddingBottom: '12px', margin: 0, textAlign: 'center', color: theme.textMain }}>
               PARÁMETROS DE ENTRADA
             </h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', margin: '12px 0' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '12px 0' }}>
               <div>
                 <label style={labelStyle(theme)}>DEMANDA ANUAL (D) <span style={{ opacity: 0.75 }}>[unids/año]</span></label>
                 <input type="number" name="demanda_anual" value={formData.demanda_anual} onChange={handleChange} style={inputStyle(theme)} />
@@ -254,9 +249,11 @@ export default function App() {
               letterSpacing: '1.5px',
               textTransform: 'uppercase',
               cursor: 'pointer', 
-              marginTop: '10px',
-              boxShadow: '0 4px 12px rgba(229, 33, 54, 0.3)'
-            }}  >
+              marginTop: '12px',
+              boxShadow: '0 4px 12px rgba(229, 33, 54, 0.3)',
+              flexShrink: 0
+            }}
+          >
             EJECUTAR SIMULACIÓN
           </button>
         </div>
@@ -270,7 +267,7 @@ export default function App() {
           display: 'flex',
           flexDirection: 'column',
           boxSizing: 'border-box',
-          height: '100%',
+          maxHeight: 'calc(100vh - 95px)',
           overflow: 'hidden',
           boxShadow: theme.cardShadow
         }}>
@@ -421,7 +418,7 @@ function labelStyle(theme) {
 function inputStyle(theme) {
   return {
     width: '100%', 
-    padding: '8px 10px', 
+    padding: '6px 10px', 
     borderRadius: '6px', 
     backgroundColor: theme.inputBg, 
     color: theme.textMain, 
