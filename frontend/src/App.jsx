@@ -4,7 +4,7 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceL
 import { Package, ShieldAlert, RefreshCw, Cpu, Activity, Sun, Moon, HelpCircle, X } from 'lucide-react';
 
 export default function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [showGuide, setShowGuide] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -58,20 +58,22 @@ export default function App() {
     <div style={{ 
       backgroundColor: theme.bgApp, 
       color: theme.textMain, 
-      width: '100%',
+      width: '100vw',
+      maxWidth: '100%',
       minHeight: '100vh',
       margin: 0,
       padding: 0,
       fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       display: 'flex',
       flexDirection: 'column',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      overflowX: 'hidden'
     }}>
       {/* Header Estilo Riot Games */}
       <header style={{ 
         backgroundColor: theme.bgHeader, 
         borderBottom: `1px solid ${theme.border}`, 
-        padding: '0 32px',
+        padding: '0 24px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -171,33 +173,33 @@ export default function App() {
       <div style={{ 
         width: '100%', 
         flex: 1,
-        padding: '16px 24px', 
+        padding: '16px', 
         display: 'grid', 
-        gridTemplateColumns: '340px 1fr', 
+        gridTemplateColumns: '320px 1fr', 
         gap: '16px',
         boxSizing: 'border-box'
       }}>
         
-        {/* Panel Izquierdo: Inputs (Ajustado con Scroll Interno) */}
+        {/* Panel Izquierdo: Inputs */}
         <div style={{ 
           backgroundColor: theme.bgCard, 
           border: `1px solid ${theme.border}`, 
-          padding: '20px', 
+          padding: '16px', 
           borderRadius: '12px',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
+          justify: 'space-between',
           boxSizing: 'border-box',
           overflowY: 'auto',
-          maxHeight: 'calc(100vh - 95px)',
+          maxHeight: 'calc(100vh - 97px)',
           boxShadow: theme.cardShadow
         }}>
           <div>
-            <h2 style={{ fontSize: '12px', fontWeight: '900', letterSpacing: '1.5px', textTransform: 'uppercase', borderBottom: `1px solid ${theme.border}`, paddingBottom: '12px', margin: 0, textAlign: 'center', color: theme.textMain }}>
+            <h2 style={{ fontSize: '11px', fontWeight: '900', letterSpacing: '1.5px', textTransform: 'uppercase', borderBottom: `1px solid ${theme.border}`, paddingBottom: '10px', margin: 0, textAlign: 'center', color: theme.textMain }}>
               PARÁMETROS DE ENTRADA
             </h2>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '12px 0' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', margin: '10px 0' }}>
               <div>
                 <label style={labelStyle(theme)}>DEMANDA ANUAL (D) <span style={{ opacity: 0.75 }}>[unids/año]</span></label>
                 <input type="number" name="demanda_anual" value={formData.demanda_anual} onChange={handleChange} style={inputStyle(theme)} />
@@ -239,7 +241,7 @@ export default function App() {
             onClick={handleSimular}
             style={{ 
               width: '100%', 
-              padding: '14px', 
+              padding: '12px', 
               backgroundColor: '#e52136', 
               color: '#ffffff', 
               border: 'none', 
@@ -249,7 +251,7 @@ export default function App() {
               letterSpacing: '1.5px',
               textTransform: 'uppercase',
               cursor: 'pointer', 
-              marginTop: '12px',
+              marginTop: '8px',
               boxShadow: '0 4px 12px rgba(229, 33, 54, 0.3)',
               flexShrink: 0
             }}
@@ -267,7 +269,7 @@ export default function App() {
           display: 'flex',
           flexDirection: 'column',
           boxSizing: 'border-box',
-          maxHeight: 'calc(100vh - 95px)',
+          maxHeight: 'calc(100vh - 97px)',
           overflow: 'hidden',
           boxShadow: theme.cardShadow
         }}>
@@ -410,7 +412,7 @@ function labelStyle(theme) {
     color: theme.labelColor,
     letterSpacing: '0.5px',
     display: 'block',
-    marginBottom: '4px',
+    marginBottom: '3px',
     textAlign: 'center'
   };
 }
@@ -418,12 +420,12 @@ function labelStyle(theme) {
 function inputStyle(theme) {
   return {
     width: '100%', 
-    padding: '6px 10px', 
+    padding: '5px 8px', 
     borderRadius: '6px', 
     backgroundColor: theme.inputBg, 
     color: theme.textMain, 
     border: `1px solid ${theme.inputBorder}`, 
-    fontSize: '12px',
+    fontSize: '11px',
     fontWeight: '700',
     textAlign: 'center',
     boxSizing: 'border-box',
